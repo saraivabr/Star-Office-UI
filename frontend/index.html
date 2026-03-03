@@ -2757,8 +2757,15 @@ function toggleBrokerPanel() {
         async function restoreHomeBackground() {
             const homeBtn = document.getElementById('btn-back-home');
             flashButtonActive(homeBtn);
-            setWorkingStatus('正在回老家');
             const out = document.getElementById('asset-move-result') || document.getElementById('asset-upload-result');
+
+            const confirmMsg = '⚠️ 回老家会覆盖当前自定义房间背景（可从 bg-history 恢复历史图）。\n确定继续吗？';
+            if (!window.confirm(confirmMsg)) {
+                out.textContent = '已取消回老家';
+                return;
+            }
+
+            setWorkingStatus('正在回老家');
             // 点击即刻显示遮罩，先于任何网络调用
             showRoomLoadingOverlay();
             out.textContent = '🏡 正在回老家（恢复初始底图）...';
