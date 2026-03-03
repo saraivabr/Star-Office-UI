@@ -259,8 +259,8 @@
             position: fixed !important;
             right: max(8px, env(safe-area-inset-right, 0px));
             bottom: max(8px, env(safe-area-inset-bottom, 0px));
-            width: calc(min(320px, 92vw) - 16px);
-            max-width: calc(92vw - 16px);
+            width: 304px;
+            max-width: calc(100vw - 16px);
             box-sizing: border-box;
             margin-top: 0;
             background: rgba(11, 18, 32, 0.96);
@@ -1043,8 +1043,8 @@
             #asset-upload-panel {
                 right: max(8px, env(safe-area-inset-right, 0px));
                 bottom: max(8px, env(safe-area-inset-bottom, 0px));
-                width: calc(92vw - 16px);
-                max-width: calc(92vw - 16px);
+                width: min(304px, calc(100vw - 16px));
+                max-width: calc(100vw - 16px);
                 padding: 8px;
             }
             .asset-upload-grid {
