@@ -488,6 +488,42 @@ def normalize_agent_state(s):
     return 'idle'
 
 
+# User-facing model aliases -> provider model ids
+USER_MODEL_TO_PROVIDER_MODELS = {
+    "nanobanana-pro": [
+        "nano-banana-pro-preview",
+        "gemini-3-pro-image-preview",
+    ],
+    "nanobanana-2": [
+        "gemini-2.5-flash-image",
+        "gemini-2.0-flash-exp-image-generation",
+    ],
+}
+
+PROVIDER_MODEL_TO_USER_MODEL = {
+    provider: user
+    for user, providers in USER_MODEL_TO_PROVIDER_MODELS.items()
+    for provider in providers
+}
+
+
+def _normalize_user_model(model_name: str) -> str:
+    m = (model_name or "").strip()
+    if not m:
+        return "nanobanana-pro"
+    low = m.lower()
+    if low in USER_MODEL_TO_PROVIDER_MODELS:
+        return low
+    if low in PROVIDER_MODEL_TO_USER_MODEL:
+        return PROVIDER_MODEL_TO_USER_MODEL[low]
+    return "nanobanana-pro"
+
+
+def _provider_model_candidates(user_model: str):
+    normalized = _normalize_user_model(user_model)
+    return list(USER_MODEL_TO_PROVIDER_MODELS.get(normalized, USER_MODEL_TO_PROVIDER_MODELS["nanobanana-pro"]))
+
+
 def _generate_rpg_background_to_webp(out_webp_path: str, width: int = 1280, height: int = 720, custom_prompt: str = "", speed_mode: str = "fast"):
     """Generate RPG-style room background and save as webp.
 
@@ -521,21 +557,18 @@ def _generate_rpg_background_to_webp(out_webp_path: str, width: int = 1280, heig
     # 默认使用更稳妥的 quality 档，避免 fast 模型在部分 API 通道不可用
     mode = (speed_mode or "quality").strip().lower()
     if mode not in {"fast", "quality"}:
-        mode = "fast"
+        mode = "quality"
 
-    configured_model = (runtime_cfg.get("gemini_model") or "").strip() or "gemini-3.1-flash-image-preview"
+    configured_user_model = _normalize_user_model(runtime_cfg.get("gemini_model") or "nanobanana-pro")
     if mode == "fast":
-        selected_model = "nanobanana-2"
+        preferred_user_model = "nanobanana-2"
         # fast 也提高基础清晰度：从 1024x576 提升到 1152x648（牺牲少量速度）
         gen_width, gen_height = 1152, 648
         ref_width, ref_height = 1152, 648
     else:
-        selected_model = configured_model
+        preferred_user_model = configured_user_model
         gen_width, gen_height = width, height
         ref_width, ref_height = width, height
-
-    if mode == "fast" and selected_model not in {"nanobanana-2", "nanobanana-pro"}:
-        selected_model = "nanobanana-2"
 
     prompt = (
         "Use a top-down pixel room composition compatible with an office game scene. "
@@ -577,7 +610,6 @@ def _generate_rpg_background_to_webp(out_webp_path: str, width: int = 1280, heig
     # 运行时配置优先：只保留 GEMINI_API_KEY，避免脚本因双 key 报错
     env.pop("GOOGLE_API_KEY", None)
     env["GEMINI_API_KEY"] = api_key
-    env["GEMINI_MODEL"] = selected_model
 
     def _run_cmd(cmd_args):
         return subprocess.run(cmd_args, capture_output=True, text=True, env=env, timeout=240)
@@ -602,23 +634,14 @@ def _generate_rpg_background_to_webp(out_webp_path: str, width: int = 1280, heig
             m.extend(["--model", model_name])
         return m
 
-    # 模型多级回退（兼容不同 key/channel 可用性差异）
-    if mode == "fast":
-        model_candidates = [
-            "nanobanana-2",
-            configured_model,
-            "nanobanana-pro",
-            "gemini-2.5-flash-image-preview",
-            "gemini-3.1-flash-image-preview",
-        ]
-    else:
-        model_candidates = [
-            configured_model,
-            "nanobanana-pro",
-            "nanobanana-2",
-            "gemini-2.5-flash-image-preview",
-            "gemini-3.1-flash-image-preview",
-        ]
+    # 模型多级回退（仅允许两类用户模型：nanobanana-pro / nanobanana-2）
+    # 每个用户模型映射到若干 provider 真实模型。
+    user_model_order = [preferred_user_model, configured_user_model]
+    user_model_order = [m for i, m in enumerate(user_model_order) if m and m not in user_model_order[:i]]
+
+    model_candidates = []
+    for um in user_model_order:
+        model_candidates.extend(_provider_model_candidates(um))
     # 去重并清理空项
     model_candidates = [m for i, m in enumerate(model_candidates) if m and m not in model_candidates[:i]]
 
@@ -1617,7 +1640,7 @@ def gemini_config_get():
             "ok": True,
             "has_api_key": bool(key),
             "api_key_masked": masked,
-            "gemini_model": cfg.get("gemini_model") or "nanobanana-pro",
+            "gemini_model": _normalize_user_model(cfg.get("gemini_model") or "nanobanana-pro"),
         })
     except Exception as e:
         return jsonify({"ok": False, "msg": str(e)}), 500
@@ -1631,7 +1654,7 @@ def gemini_config_set():
     try:
         data = request.get_json(silent=True) or {}
         api_key = (data.get("api_key") or "").strip()
-        model = (data.get("model") or "").strip() or "nanobanana-pro"
+        model = _normalize_user_model((data.get("model") or "").strip() or "nanobanana-pro")
         payload = {"gemini_model": model}
         if api_key:
             payload["gemini_api_key"] = api_key
