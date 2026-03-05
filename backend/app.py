@@ -961,6 +961,16 @@ def join_agent():
             if not key_item:
                 return jsonify({"ok": False, "msg": "接入密钥无效"}), 403
 
+            # Key-level expiration check
+            key_expires_at_str = key_item.get("expiresAt")
+            if key_expires_at_str:
+                try:
+                    key_expires_at = datetime.fromisoformat(key_expires_at_str)
+                    if datetime.now() > key_expires_at:
+                        return jsonify({"ok": False, "msg": "该接入密钥已过期，活动已结束 🎉"}), 403
+                except Exception:
+                    pass
+
             agents = load_agents_state()
 
             # 并发上限：同一个 key “同时在线”最多 3 个。
@@ -1152,7 +1162,16 @@ def agent_push():
         key_item = next((k for k in keys_data.get("keys", []) if k.get("key") == join_key), None)
         if not key_item:
             return jsonify({"ok": False, "msg": "joinKey 无效"}), 403
-        # key 可复用：不再做 used/usedByAgentId 绑定校验
+
+        # Key-level expiration check
+        key_expires_at_str = key_item.get("expiresAt")
+        if key_expires_at_str:
+            try:
+                key_expires_at = datetime.fromisoformat(key_expires_at_str)
+                if datetime.now() > key_expires_at:
+                    return jsonify({"ok": False, "msg": "该接入密钥已过期，活动已结束 🎉"}), 403
+            except Exception:
+                pass
 
 
         agents = load_agents_state()
