@@ -66,6 +66,18 @@ _last_home_rotate_at = 0
 ASSET_DEFAULTS_FILE = os.path.join(ROOT_DIR, "asset-defaults.json")
 RUNTIME_CONFIG_FILE = os.path.join(ROOT_DIR, "runtime-config.json")
 
+# Canonical agent states: single source of truth for validation and mapping
+VALID_AGENT_STATES = frozenset({"idle", "writing", "researching", "executing", "syncing", "error"})
+WORKING_STATES = frozenset({"writing", "researching", "executing"})  # subset used for auto-idle TTL
+STATE_TO_AREA_MAP = {
+    "idle": "breakroom",
+    "writing": "writing",
+    "researching": "writing",
+    "executing": "writing",
+    "syncing": "writing",
+    "error": "error",
+}
+
 
 app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path="/static")
 app.secret_key = os.getenv("FLASK_SECRET_KEY") or os.getenv("STAR_OFFICE_SECRET") or "star-office-dev-secret-change-me"
@@ -162,8 +174,7 @@ def load_state():
         ttl = int(state.get("ttl_seconds", 300))
         updated_at = state.get("updated_at")
         s = state.get("state", "idle")
-        working_states = {"writing", "researching", "executing"}
-        if updated_at and s in working_states:
+        if updated_at and s in WORKING_STATES:
             # tolerate both with/without timezone
             dt = datetime.fromisoformat(updated_at.replace("Z", "+00:00"))
             # Use UTC for aware datetimes; local time for naive.
@@ -532,9 +543,9 @@ def _animated_to_spritesheet(
 
 
 def normalize_agent_state(s):
-    """归一化状态，提高兼容性。
-    兼容输入：working/busy → writing; run/running → executing; sync → syncing; research → researching.
-    未识别默认返回 idle.
+    """Normalize agent state for compatibility.
+    Maps synonyms (e.g. working/busy -> writing, run/running -> executing) into VALID_AGENT_STATES.
+    Returns 'idle' for unknown values.
     """
     if not s:
         return 'idle'
@@ -547,9 +558,8 @@ def normalize_agent_state(s):
         return 'syncing'
     if s_lower in {'research', 'search'}:
         return 'researching'
-    if s_lower in {'idle', 'writing', 'researching', 'executing', 'syncing', 'error'}:
+    if s_lower in VALID_AGENT_STATES:
         return s_lower
-    # 默认 fallback
     return 'idle'
 
 
@@ -781,15 +791,8 @@ def _generate_rpg_background_to_webp(out_webp_path: str, width: int = 1280, heig
 
 
 def state_to_area(state):
-    area_map = {
-        "idle": "breakroom",
-        "writing": "writing",
-        "researching": "writing",
-        "executing": "writing",
-        "syncing": "writing",
-        "error": "error"
-    }
-    return area_map.get(state, "breakroom")
+    """Map agent state to office area (breakroom / writing / error)."""
+    return STATE_TO_AREA_MAP.get(state, "breakroom")
 
 
 # Ensure files exist
@@ -1155,7 +1158,6 @@ def agent_push():
         if not agent_id or not join_key or not state:
             return jsonify({"ok": False, "msg": "缺少 agentId/joinKey/state"}), 400
 
-        valid_states = {"idle", "writing", "researching", "executing", "syncing", "error"}
         state = normalize_agent_state(state)
 
         keys_data = load_join_keys()
@@ -1274,8 +1276,7 @@ def set_state_endpoint():
         state = load_state()
         if "state" in data:
             s = data["state"]
-            valid_states = {"idle", "writing", "researching", "executing", "syncing", "error"}
-            if s in valid_states:
+            if s in VALID_AGENT_STATES:
                 state["state"] = s
         if "detail" in data:
             state["detail"] = data["detail"]
