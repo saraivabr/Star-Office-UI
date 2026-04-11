@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Star 的像素办公室</title>
+    <title>Escritório Pixel do Star</title>
     <style>
         @font-face {
             font-family: 'ArkPixel';
@@ -1594,11 +1594,11 @@
 </head>
 <body>
     <div id="window-controls">
-        <button id="btn-close" class="traffic-btn close" title="关闭"></button>
-        <button id="btn-minimize-mode" class="traffic-btn min" title="最小化模式"></button>
-        <button id="btn-open-frontend" class="traffic-btn max" title="回到前端界面"></button>
+        <button id="btn-close" class="traffic-btn close" title="Fechar"></button>
+        <button id="btn-minimize-mode" class="traffic-btn min" title="Modo minimizado"></button>
+        <button id="btn-open-frontend" class="traffic-btn max" title="Voltar à interface"></button>
     </div>
-    <div id="status-fab">加载中...</div>
+    <div id="status-fab">Carregando...</div>
     <!-- 加载遮罩 -->
     <div id="loading-overlay">
         <div id="loading-text">Loading Star’s pixel office...</div>
@@ -1609,10 +1609,10 @@
     
     <div id="main-stage">
         <div id="game-container">
-            <div id="status-text">加载中...</div>
+            <div id="status-text">Carregando...</div>
             <div id="office-plaque-dom">
                 <span class="office-plaque-star">⭐</span>
-                <span id="office-plaque-text">海辛小龙虾的办公室</span>
+                <span id="office-plaque-text">Escritório do Star</span>
                 <span class="office-plaque-star">⭐</span>
             </div>
         </div>
@@ -1621,32 +1621,32 @@
     <div id="bottom-panels">
         <!-- Memo 面板 -->
         <div id="memo-panel">
-            <div id="memo-title">昨 日 小 记</div>
+            <div id="memo-title">NOTAS DE ONTEM</div>
             <div id="memo-date"></div>
             <div class="memo-decoration">─ ─ ─ ─ ─</div>
             <div id="memo-content">
-                <div id="memo-placeholder">加载中...</div>
+                <div id="memo-placeholder">Carregando...</div>
             </div>
             <div class="memo-decoration">─ ─ ─ ─ ─</div>
         </div>
         
         <!-- 状态控制栏 -->
         <div id="control-bar">
-            <div id="control-bar-title">Star 状态</div>
+            <div id="control-bar-title">Status do Star</div>
             <div id="control-buttons">
-                <button id="btn-state-idle" onclick="setState('idle', getStateDetailByState('idle'))">待命</button>
-                <button id="btn-state-writing" onclick="setState('writing', getStateDetailByState('writing'))">工作</button>
-                <button id="btn-state-syncing" onclick="setState('syncing', getStateDetailByState('syncing'))">同步</button>
-                <button id="btn-state-error" onclick="setState('error', getStateDetailByState('error'))">报警</button>
-                <button id="btn-open-drawer" onclick="openAssetWindowFromMain()">装修房间</button>
+                <button id="btn-state-idle" onclick="setState('idle', getStateDetailByState('idle'))">Aguardando</button>
+                <button id="btn-state-writing" onclick="setState('writing', getStateDetailByState('writing'))">Trabalhando</button>
+                <button id="btn-state-syncing" onclick="setState('syncing', getStateDetailByState('syncing'))">Sincronizar</button>
+                <button id="btn-state-error" onclick="setState('error', getStateDetailByState('error'))">Alerta</button>
+                <button id="btn-open-drawer" onclick="openAssetWindowFromMain()">Decorar Sala</button>
             </div>
         </div>
 
         <!-- Guest Agent 名单面板（右下角） -->
         <div id="guest-agent-panel">
-            <div id="guest-agent-panel-title">访 客 列 表</div>
+            <div id="guest-agent-panel-title">LISTA DE VISITANTES</div>
             <div id="guest-agent-list">
-                <div style="color:#9ca3af;font-size:12px;text-align:center;padding:20px 0;">正在加载访客...</div>
+                <div style="color:#9ca3af;font-size:12px;text-align:center;padding:20px 0;">Carregando visitantes...</div>
             </div>
             </div>
         </div>
@@ -1656,22 +1656,22 @@
     <div id="room-loading-overlay" aria-live="polite" aria-busy="true">
         <div class="room-loading-inner">
             <div id="room-loading-emoji">🦞</div>
-            <div id="room-loading-text">正在打包虾头……</div>
+            <div id="room-loading-text">Empacotando…</div>
         </div>
     </div>
 
     <div id="asset-drawer-backdrop" onclick="toggleAssetDrawer(false)"></div>
     <aside id="asset-drawer" data-no-window-drag="1">
         <div id="asset-drawer-header" data-no-window-drag="1">
-            <span>装修房间 · 资产侧边栏</span>
-            <button id="btn-close-drawer" onclick="toggleAssetDrawer(false)">关闭</button>
+            <span>Decorar Sala · Barra de Assets</span>
+            <button id="btn-close-drawer" onclick="toggleAssetDrawer(false)">Fechar</button>
         </div>
         <div id="asset-drawer-body">
             <div id="asset-auth-gate" class="asset-preview-box">
-                <div class="asset-preview-title">请输入装修验证码</div>
+                <div class="asset-preview-title">Insira o código de decoração</div>
                 <div class="asset-toolbar">
-                    <input id="asset-pass-input" type="password" placeholder="输入验证码" />
-                    <button onclick="unlockAssetDrawer()">验证</button>
+                    <input id="asset-pass-input" type="password" placeholder="Código" />
+                    <button onclick="unlockAssetDrawer()">Verificar</button>
                 </div>
                 <div id="asset-auth-msg" class="asset-sub"></div>
             </div>
@@ -1679,66 +1679,66 @@
             <div id="asset-main-content" style="display:none;">
                 <div id="asset-move-panel">
                     <div class="asset-toolbar" id="asset-move-row">
-                        <button id="btn-move-house" class="btn-move" onclick="generateRpgBackground()">📦 搬新家</button>
-                        <button id="btn-back-home" class="btn-home" onclick="restoreHomeBackground()">🐚 回老家</button>
+                        <button id="btn-move-house" class="btn-move" onclick="generateRpgBackground()">📦 Nova Casa</button>
+                        <button id="btn-back-home" class="btn-home" onclick="restoreHomeBackground()">🐚 Voltar para Casa</button>
                     </div>
                     <div class="asset-toolbar" id="asset-broker-row">
-                        <button class="btn-broker" onclick="toggleBrokerPanel()">🤝 找中介</button>
-                        <button id="btn-diy" class="btn-diy" onclick="toggleManualPanel()">🪚 自己装</button>
+                        <button class="btn-broker" onclick="toggleBrokerPanel()">🤝 Corretor</button>
+                        <button id="btn-diy" class="btn-diy" onclick="toggleManualPanel()">🪚 Personalizar</button>
                     </div>
                     <div id="asset-move-result" class="asset-sub" style="margin-top:4px; margin-bottom:6px;"></div>
                     <div id="asset-broker-panel">
-                        <div class="asset-sub" style="margin-bottom:6px;">写你的风格主题（严格保持原始房间结构，只改变视觉风格）</div>
-                        <textarea id="asset-broker-prompt" placeholder="例如：像素风赛博东京夜景，霓虹灯、雨夜地面反光、蓝紫主色"></textarea>
+                        <div class="asset-sub" style="margin-bottom:6px;">Descreva seu tema de estilo (mantendo a estrutura original da sala, alterando apenas o estilo visual)</div>
+                        <textarea id="asset-broker-prompt" placeholder="ex.: tema cyberpunk, estilo Monet, tema masmorra…"></textarea>
                         <div class="asset-toolbar" style="margin-top:6px; gap:8px; align-items:center; justify-content:flex-start;">
-                            <span id="speed-mode-label" class="asset-sub" style="min-width:62px;">生成模式</span>
+                            <span id="speed-mode-label" class="asset-sub" style="min-width:62px;">Modo de Geração</span>
                             <button id="speed-fast-btn" type="button" onclick="setSpeedMode('fast')" style="background:#22c55e;color:#052e16;border-color:#16a34a;">🍌2</button>
                             <button id="speed-quality-btn" type="button" onclick="setSpeedMode('quality')" style="background:#334155;color:#e5e7eb;border-color:#475569;">🍌Pro</button>
                         </div>
                         <details id="asset-gemini-panel" style="margin-top:6px; border:1px dashed #334155; border-radius:8px; padding:8px; background:#0b1220;">
-                            <summary id="gemini-panel-summary" style="cursor:pointer; color:#cbd5e1;">🔐 API 设置（可折叠）</summary>
+                            <summary id="gemini-panel-summary" style="cursor:pointer; color:#cbd5e1;">🔐 Configurações de API (recolhível)</summary>
                             <div id="asset-gemini-config" style="display:block; margin-top:6px;">
-                                <div id="gemini-config-hint" class="asset-sub" style="margin-bottom:4px;">可选：填写你的生图 API Key（留空不影响基础功能）</div>
-                                <div class="asset-sub" style="margin-bottom:6px;"><a id="gemini-api-doc-link" href="https://ai.google.dev/gemini-api/docs/api-key?hl=zh-cn" target="_blank" rel="noopener noreferrer">📘 如何申请 Google API Key</a></div>
+                                <div id="gemini-config-hint" class="asset-sub" style="margin-bottom:4px;">Opcional: insira sua chave de API de imagem (funções básicas funcionam sem ela)</div>
+                                <div class="asset-sub" style="margin-bottom:6px;"><a id="gemini-api-doc-link" href="https://ai.google.dev/gemini-api/docs/api-key" target="_blank" rel="noopener noreferrer">📘 Como obter uma chave da API Google</a></div>
                                 <div id="gemini-mask-status" class="asset-sub" style="margin-bottom:6px; color:#a7f3d0;"></div>
                                 <div class="asset-toolbar" style="gap:6px; flex-wrap:wrap;">
-                                    <input id="gemini-api-key-input" type="password" placeholder="粘贴 GEMINI_API_KEY（不会回显）" style="min-width:220px; flex:1;" autocomplete="new-password" />
-                                    <button id="btn-save-gemini-key" onclick="saveGeminiConfigFromUI()">保存 Key</button>
+                                    <input id="gemini-api-key-input" type="password" placeholder="Cole a GEMINI_API_KEY (oculta)" style="min-width:220px; flex:1;" autocomplete="new-password" />
+                                    <button id="btn-save-gemini-key" onclick="saveGeminiConfigFromUI()">Salvar Chave</button>
                                 </div>
                                 <div id="gemini-config-msg" class="asset-sub" style="margin-top:4px;"></div>
                             </div>
                         </details>
                         <div id="asset-broker-actions">
-                            <button onclick="generateCustomRpgBackground()">按中介方案搬家</button>
+                            <button onclick="generateCustomRpgBackground()">Seguir Corretor</button>
                         </div>
                     </div>
                 </div>
 
                 <div id="asset-home-actions-panel" class="asset-preview-box" style="margin-bottom:10px;">
                     <div class="asset-toolbar" style="margin-bottom:6px; gap:8px;">
-                        <button id="btn-back-last-bg" class="btn-home" onclick="restoreLastGeneratedBackground()">↩️ 回上一个家</button>
-                        <button id="btn-favorite-home" class="btn-home" onclick="saveCurrentHomeFavorite()">⭐ 收藏这个家</button>
+                        <button id="btn-back-last-bg" class="btn-home" onclick="restoreLastGeneratedBackground()">↩️ Casa Anterior</button>
+                        <button id="btn-favorite-home" class="btn-home" onclick="saveCurrentHomeFavorite()">⭐ Salvar Esta Casa</button>
                     </div>
                     <div id="asset-home-favorites" class="asset-preview-box" style="margin:0;">
-                        <div id="asset-home-favorites-title" class="asset-preview-title">🏠 收藏的家</div>
+                        <div id="asset-home-favorites-title" class="asset-preview-title">🏠 Casas Salvas</div>
                         <div id="asset-home-favorites-list" class="home-fav-list"></div>
                     </div>
                 </div>
 
                 <div id="asset-manual-panel">
                     <div class="asset-toolbar">
-                        <input id="asset-search" placeholder="搜索资产名（如 desk / sofa / star）" oninput="renderAssetDrawerList()" />
+                        <input id="asset-search" placeholder="Pesquisar assets (mesa / sofá / star)" oninput="renderAssetDrawerList()" />
                     </div>
                     <div id="asset-list"></div>
                     <div id="asset-upload-panel">
                         <input id="asset-upload-file" type="file" accept="image/*" style="display:none;" />
                         <div class="asset-toolbar" style="margin-top:0; margin-bottom:6px; gap:8px;">
-                            <button id="asset-choose-btn" onclick="openInlineAssetUploader()">上传替换素材</button>
-                            <button id="asset-commit-refresh-btn" onclick="commitAndRefresh()" disabled style="opacity:.55;">确认并刷新</button>
+                            <button id="asset-choose-btn" onclick="openInlineAssetUploader()">Enviar Asset</button>
+                            <button id="asset-commit-refresh-btn" onclick="commitAndRefresh()" disabled style="opacity:.55;">Aplicar e Atualizar</button>
                         </div>
                         <div class="asset-toolbar" style="margin-top:0; margin-bottom:6px; gap:8px;">
-                            <button id="asset-reset-default-btn" onclick="resetSelectedAssetToDefault()" disabled style="opacity:.55;">重置为默认资产</button>
-                            <button id="asset-restore-prev-btn" onclick="restoreSelectedAssetPrev()" disabled style="opacity:.55;">用上一版</button>
+                            <button id="asset-reset-default-btn" onclick="resetSelectedAssetToDefault()" disabled style="opacity:.55;">Restaurar Padrão</button>
+                            <button id="asset-restore-prev-btn" onclick="restoreSelectedAssetPrev()" disabled style="opacity:.55;">Restaurar Anterior</button>
                         </div>
                         <div id="asset-upload-result" class="asset-sub"></div>
                     </div>
@@ -1750,12 +1750,13 @@
         <div id="coords-display">X: 0 | Y: 0</div>
     </div>
     <button id="coords-toggle" style="position:fixed; top:calc(env(safe-area-inset-top, 0px) + 12px); right:12px; z-index:999999; padding:8px 10px; font-family:ArkPixel,monospace; font-size:13px; cursor:pointer; border:2px solid #333; border-radius:5px; background:#333; color:#fff;">
-        显示坐标
+        Mostrar Coords
     </button>
     <button id="pan-toggle" style="position:fixed; top:calc(env(safe-area-inset-top, 0px) + 12px); left:12px; z-index:999999; padding:8px 10px; font-family:ArkPixel,monospace; font-size:13px; cursor:pointer; border:2px solid #333; border-radius:5px; background:#333; color:#fff;">
-        移动视野
+        Mover Visão
     </button>
     <div id="lang-toggle-group" style="position:fixed; top:calc(env(safe-area-inset-top, 0px) + 52px); left:12px; z-index:999999; display:flex; align-items:center;">
+        <button id="lang-btn-pt" onclick="setUILanguage('pt')" style="cursor:pointer;">PT</button>
         <button id="lang-btn-en" onclick="setUILanguage('en')" style="cursor:pointer;">EN</button>
         <button id="lang-btn-jp" onclick="setUILanguage('ja')" style="cursor:pointer;">JP</button>
         <button id="lang-btn-cn" onclick="setUILanguage('zh')" style="cursor:pointer;">CN</button>
@@ -1764,7 +1765,7 @@
     <script src="/static/vendor/phaser-3.80.1.min.js"></script>
     <script>
         // 简易中英文切换
-        let uiLang = localStorage.getItem('uiLang') || 'en';
+        let uiLang = localStorage.getItem('uiLang') || 'pt';
         const OFFICE_PLAQUE_STORAGE_KEY = 'officePlaqueTitle';
         let officePlaqueCustomTitle = (localStorage.getItem(OFFICE_PLAQUE_STORAGE_KEY) || '').trim();
         const I18N = {
@@ -1869,6 +1870,40 @@
                 stateDetailIdle: '待機', stateDetailWriting: '文書整理', stateDetailResearching: '情報検索', stateDetailExecuting: 'タスク実行', stateDetailSyncing: '同期バックアップ', stateDetailError: 'エラー発生',
                 stateLabelIdle: '待機', stateLabelWriting: '文書整理', stateLabelResearching: '情報検索', stateLabelExecuting: 'タスク実行', stateLabelSyncing: '同期バックアップ', stateLabelError: 'エラー発生',
                 statusBrokerDecorating: '仲介の装飾プランを処理中', statusMovingHome: '引っ越し中', statusRestoreHome: 'ホーム背景を復元中', statusRestoreLastBg: '前回背景へ復元中', statusApplyFavorite: '保存したマップを適用中'
+            },
+            pt: {
+                controlTitle: 'Status do Star',
+                btnIdle: 'Aguardando', btnWork: 'Trabalhando', btnSync: 'Sincronizando', btnError: 'Alerta', btnDecor: 'Decorar Sala',
+                drawerTitle: 'Decorar Sala · Barra de Assets', drawerClose: 'Fechar',
+                authTitle: 'Insira o código de decoração', authPlaceholder: 'Código', authVerify: 'Verificar', authDefaultPassHint: 'Código padrão: 1234 (pode ser alterado; senha forte recomendada)',
+                drawerVisibilityTip: 'Visibilidade: use o botão de olho em cada linha para ocultar/mostrar o asset',
+                hideDrawer: '👁 Ocultar Painel', showDrawer: '👁 Mostrar Painel',
+                assetHide: 'Ocultar', assetShow: 'Mostrar',
+                resetToDefault: 'Restaurar Padrão', restorePrevAsset: 'Usar Anterior',
+                btnMove: '📦 Nova Casa', btnHome: '🐚 Voltar para Casa', btnHomeLast: '↩️ Casa Anterior', btnHomeFavorite: '⭐ Salvar Esta Casa', btnBroker: '🤝 Corretor', btnDIY: '🪚 Personalizar', btnBrokerGo: 'Seguir Corretor',
+                homeFavTitle: '🏠 Casas Salvas', homeFavEmpty: 'Nenhuma casa salva. Toque em "⭐ Salvar Esta Casa" primeiro.', homeFavApply: 'Aplicar ao Mapa Atual', homeFavSaved: '✅ Mapa atual salvo', homeFavApplied: '✅ Casa salva aplicada',
+                brokerHint: 'Que tipo de ambiente você recomendaria?',
+                brokerPromptPh: 'ex.: tema cyberpunk, estilo Monet, tema masmorra…',
+                brokerNeedPrompt: 'Por favor, insira a descrição do estilo primeiro',
+                brokerGenerating: '🏘️ Gerando fundo da sala pelo plano do corretor, aguarde (20-90s)...',
+                brokerDone: '✅ Plano aplicado e fundo substituído, atualizando sala...',
+                moveSuccess: '✅ Mudança realizada com sucesso!',
+                brokerMissingKey: '❌ Falha na geração: chave GEMINI API ausente. Preencha abaixo e tente novamente.',
+                geminiPanelTitle: '🔐 Configurações de API (recolhível)', geminiHint: 'Opcional: insira sua chave de API de imagem (funções básicas funcionam sem ela)', geminiApiDoc: '📘 Como obter uma chave da API Google', geminiInputPh: 'Cole a GEMINI_API_KEY (oculta)', geminiSaveKey: 'Salvar Chave', geminiMaskNoKey: 'Atual: nenhuma chave configurada', geminiMaskHasKey: 'Chave configurada:',
+                speedModeLabel: 'Modo de Geração', speedFast: '🍌2', speedQuality: '🍌Pro',
+                searchPlaceholder: 'Pesquisar assets (mesa / sofá / star)', loaded: 'Carregado', allAssets: 'Todos os Assets',
+                chooseImage: 'Enviar Asset', confirmUpload: 'Aplicar e Atualizar', uploadPending: 'Aguardando Envio', uploadTarget: 'Alvo',
+                assetHintNotInScene: 'Este objeto não foi detectado na cena atual; ainda é possível substituir o arquivo (efetivo após atualizar)',
+                assetHintDefault: 'Asset genérico: mantenha o tamanho original, canal alfa e âncora visual para evitar desalinhamento/distorção',
+                showCoords: 'Mostrar Coords', hideCoords: 'Ocultar Coords', moveView: 'Mover Visão', lockView: 'Travar Visão',
+                memoTitle: 'NOTAS DE ONTEM', guestTitle: 'LISTA DE VISITANTES', officeTitle: 'Escritório do Star',
+                loadingOffice: 'Carregando escritório pixel do Star...',
+                panelExpand: 'Expandir', panelCollapse: 'Recolher',
+                hiddenTag: 'Oculto', assetListLoaded: 'Assets carregados', sceneCaptured: 'Cena capturada', assetListLoadFailed: 'Falha ao carregar assets. Clique em Atualizar e tente novamente',
+                authNeedInput: 'Por favor, insira o código', authPassOk: 'Código verificado', authPassWrong: 'Código incorreto',
+                stateDetailIdle: 'Aguardando', stateDetailWriting: 'Organizando docs', stateDetailResearching: 'Pesquisando info', stateDetailExecuting: 'Executando tarefa', stateDetailSyncing: 'Sincronizando', stateDetailError: 'Erro detectado',
+                stateLabelIdle: 'Aguardando', stateLabelWriting: 'Organizando docs', stateLabelResearching: 'Pesquisando info', stateLabelExecuting: 'Executando tarefa', stateLabelSyncing: 'Sincronizando', stateLabelError: 'Erro detectado',
+                statusBrokerDecorating: 'Aplicando plano de decoração do corretor', statusMovingHome: 'Mudando para uma nova casa', statusRestoreHome: 'Restaurando fundo da casa', statusRestoreLastBg: 'Restaurando fundo anterior gerado', statusApplyFavorite: 'Aplicando mapa favorito'
             }
         };
 
@@ -1986,6 +2021,7 @@
             setText('btn-state-error', 'btnError');
             setText('btn-open-drawer', 'btnDecor');
             const langButtons = [
+                { id: 'lang-btn-pt', lang: 'pt' },
                 { id: 'lang-btn-en', lang: 'en' },
                 { id: 'lang-btn-jp', lang: 'ja' },
                 { id: 'lang-btn-cn', lang: 'zh' }
@@ -2061,7 +2097,7 @@
         }
 
         function setUILanguage(lang) {
-            if (!['zh', 'en', 'ja'].includes(lang)) return;
+            if (!['zh', 'en', 'ja', 'pt'].includes(lang)) return;
             uiLang = lang;
             localStorage.setItem('uiLang', uiLang);
             applyLanguage();
@@ -2457,6 +2493,15 @@
                 syncing: ['同期中：今日をクラウドに封印。','バックアップは儀式じゃなく安心。','書き込み中…電源オフ厳禁。','変更はタイムスタンプへ。','クラウド整列：カチッ。','同期完了まで触らないで。','未来の自分を災害から救う。','バックアップ一つ、後悔一つ減る。'],
                 error: ['警報：まず落ち着いて。','バグの気配を感じる。','再現してから修正へ。','ログをください、人語にします。','エラーは敵ではなく手がかり。','まず影響範囲を囲う。','止血してから手術。','今すぐ根因を追跡中。','大丈夫、よくある案件。','警戒モード：問題を可視化する。'],
                 cat: ['ニャー','ゴロゴロ…','しっぽフリフリ。','ひなたぼっこ最高。','見に来てくれた！','このオフィスのマスコットです。','ぐーっと伸び。','今日のおやつ、準備できた？','ゴロゴロ。','ここ、いちばん見晴らしがいい。']
+            },
+            pt: {
+                idle: ['Aguardando: ouvidos atentos.','Estou aqui, pronto para começar.','Deixa eu organizar antes de tudo.','Ufa — dando uma pausa para o cérebro.','Eficiência com elegância, como sempre.','Esperar é a base para uma ação mais precisa.','Café ainda quente, inspiração também.','Dando um boost silencioso nos bastidores.','Estado: mente serena / recarregando.','O gatinho diz: vai devagar também tá bom.'],
+                writing: ['Modo foco ativado: não perturbe.','Vamos limpar o caminho crítico primeiro.','Vou transformar complexidade em simplicidade.','Prendendo os bugs na gaiola.','Salvar primeiro, depois continuar.','Cada passo feito para poder reverter.','Progresso de hoje, confiança de amanhã.','Primeiro convergir, depois divergir.','Tornando o sistema mais legível.','Segura — isso é vencível.'],
+                researching: ['Escavando a cadeia de evidências.','Deixa eu ferver info em conclusões.','Achei: pista-chave aqui.','Controlar variáveis primeiro.','Verificando por que isso acontece.','Transformar intuição em verificação.','Localizar primeiro, otimizar depois.','Sem pressa — desenhar o mapa causal primeiro.'],
+                executing: ['Executando — não pisque.','Dividir tarefas, conquistar uma por uma.','Pipeline rodando.','Pressionar um botão e ir.','Deixa o resultado falar.','Construir MVP primeiro, depois criar beleza.'],
+                syncing: ['Sincronizando: guardar hoje na nuvem.','Backup é segurança, não cerimônia.','Escrevendo… não corte a energia.','Entregando mudanças aos timestamps.','Alinhamento na nuvem: clique.','Não mexa até terminar a sincronia.','Salvando o eu futuro de desastres.','Mais um backup, um arrependimento a menos.'],
+                error: ['Alerta disparado — mantenha a calma.','Sinto cheiro de bug.','Reproduzir primeiro, depois corrigir.','Me dá os logs; eu traduzo.','Erros são pistas, não inimigos.','Cercar a área de impacto primeiro.','Estancar o sangramento, depois operar.','Estou nisso: rastreando a causa raiz agora.','Não se preocupe, já vi isso muitas vezes.','Modo alerta: fazer o problema se revelar.'],
+                cat: ['Miau~','Ronron…','Ativando mexer de cauda.','Tomar sol é o melhor.','Alguém veio me ver!','Sou o mascote do escritório.','Grande espreguiçada~','O petisco de hoje já está pronto?','Prrrrr ronron…','Melhor ponto de vista garantido.']
             }
         };
 
@@ -3688,9 +3733,25 @@ function toggleBrokerPanel() {
                     '次のデジタル海域をアンロックしています……',
                     '好奇心を最大値まで上げています……',
                     '旅が次の番地を届けるのを待っています……'
+                ],
+                pt: [
+                    'Empacotando a bagagem de inspiração de hoje…',
+                    'Desenhando as coordenadas digitais para a próxima parada…',
+                    'Verificando o destino desta deriva…',
+                    'Dobrando o escritório em modo portátil…',
+                    'Instalando um buff de viagem nas pinças…',
+                    'Combinando o clima criativo para o próximo capítulo…',
+                    'Alternando o fuso horário para o modo aventura…',
+                    'Recebendo batimentos Wi‑Fi de um bairro desconhecido…',
+                    'Pré-visualizando o BGM de brisa marinha da próxima parada…',
+                    'Carregando um novo cômodo que você pode acabar amando…',
+                    'Preparando uma apresentação para vizinhos desconhecidos…',
+                    'Desbloqueando o próximo mar digital…',
+                    'Aumentando a curiosidade ao máximo…',
+                    'Aguardando a jornada entregar o próximo número de porta…'
                 ]
             };
-            const steps = loadingTexts[uiLang] || loadingTexts.zh;
+            const steps = loadingTexts[uiLang] || loadingTexts.pt;
             const emojis = ['🦞','🦀','🦐','🦑','🐙','🐟','🐠','🐡','🦪','🍣','🍤','🍱','🍲','🍜','🍝','🌊','🐚','🪸'];
 
             roomLoadingIndex = 0;
@@ -4658,9 +4719,17 @@ function toggleBrokerPanel() {
                     executing: 'タスクを実行中です。',
                     syncing: '状態を同期中です。',
                     error: 'エラー発生！アラートエリアへ。'
+                },
+                pt: {
+                    idle: 'Descansando na área de lazer.',
+                    writing: 'Estou trabalhando agora.',
+                    researching: 'Estou pesquisando agora.',
+                    executing: 'Estou executando tarefas.',
+                    syncing: 'Estou sincronizando o status.',
+                    error: 'Algo quebrou! Indo para a área de alerta.'
                 }
             };
-            const bubbleTextMap = bubbleTextMapByLang[uiLang] || bubbleTextMapByLang.zh;
+            const bubbleTextMap = bubbleTextMapByLang[uiLang] || bubbleTextMapByLang.pt;
 
             // 确保两位 demo 角色不会总是同一个状态（增加可观测性）
             const pickJs = (exclude) => {
@@ -5575,13 +5644,13 @@ function toggleBrokerPanel() {
                         }
                     } catch (err) {
                         console.error('fetchStatus apply error', err);
-                        typewriterTarget = '状态更新异常，正在恢复...';
+                        typewriterTarget = 'Anomalia no status, recuperando...';
                         typewriterText = '';
                         typewriterIndex = 0;
                     }
                 })
                 .catch(error => {
-                    typewriterTarget = '连接失败，正在重试...';
+                    typewriterTarget = 'Falha de conexão, tentando novamente...';
                     typewriterText = '';
                     typewriterIndex = 0;
                 });
@@ -5700,7 +5769,7 @@ function toggleBrokerPanel() {
         }
 
         function getBubbleTextsByState(stateKey) {
-            const langPack = BUBBLE_TEXTS[uiLang] || BUBBLE_TEXTS.zh;
+            const langPack = BUBBLE_TEXTS[uiLang] || BUBBLE_TEXTS.pt;
             return langPack[stateKey] || langPack.idle || [];
         }
 
